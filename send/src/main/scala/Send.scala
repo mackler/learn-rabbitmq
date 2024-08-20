@@ -3,17 +3,16 @@ import scala.util.{ Try, Success, Failure, Using }
 import scala.jdk.CollectionConverters.*
 
 object Send:
-  val QUEUE_NAME = "hello"
-  @main def sendMain(args: String*): Unit =
+  @main def main(args: String*): Unit =
     val factory = new ConnectionFactory
-    factory.setHost("localhost")
+    factory.setHost(Common.hostname)
 
     val result: Try[String] = Using.Manager: use =>
       val connection = use(factory.newConnection)
       val channel = use(connection.createChannel)
-      channel.queueDeclare(QUEUE_NAME, false, false, false, Map.empty[String, AnyRef].asJava)
+      channel.queueDeclare(Common.queueName, false, false, false, Map.empty[String, AnyRef].asJava)
       channel.basicPublish(
-        "", QUEUE_NAME, new com.rabbitmq.client.AMQP.BasicProperties, args(0).getBytes
+        "", Common.queueName, new com.rabbitmq.client.AMQP.BasicProperties, args(0).getBytes
       )
       "success"
 

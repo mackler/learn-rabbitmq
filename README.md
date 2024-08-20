@@ -1,15 +1,32 @@
 # Start the RabbitMQ server:
 
-    docker compose up --detach
+Otherwise none of the rest will work.
+
+    docker compose up --detach rabbitmq
 
 # Send a message
 
-    sbt "run hello"
-
-Choose the main method for sending
+    sbt "send/run hello"
 
 # Receive the message
 
-    sbt run
+    sbt receiver/run
 
-Choose the main method for receiving
+# Packaging the receiver in Docker
+
+First make the image:
+
+    sbt receiver/docker:publishLocal
+
+or, from within `sbt`
+
+    Docker/publishLocal
+
+This command requires authentication, so either run as root or as a
+user in the `docker` group.
+
+Then,
+
+    docker compose up receiver
+
+Now the receiver is running, waiting for messages.  Send a message as above.

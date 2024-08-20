@@ -24,10 +24,10 @@ object Receiver:
 
   @main def recvMain(args: String*): Unit =
     val factory = new ConnectionFactory
-    factory.setHost("localhost")
+    factory.setHost("rabbitmq")
     val connection = factory.newConnection
     val channel = connection.createChannel
 
-    channel.queueDeclare(Send.QUEUE_NAME, false, false, false, Map.empty[String, AnyRef].asJava)
+    channel.queueDeclare(Common.queueName, false, false, false, Map.empty[String, AnyRef].asJava)
     println("waiting for messages")
-    channel.basicConsume(Send.QUEUE_NAME, true, deliverCallback(channel))
+    channel.basicConsume(Common.queueName, true, deliverCallback(channel))

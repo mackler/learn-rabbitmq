@@ -6,11 +6,7 @@ services:
     ports:
       - "5672:5672"   # RabbitMQ default port for AMQP
       - "15672:15672" # RabbitMQ management UI
-    # environment:
-    #   RABBITMQ_DEFAULT_USER: guest
-    #   RABBITMQ_DEFAULT_PASS: guest
-    # volumes:
-    #   - rabbitmq_data:/var/lib/rabbitmq
 
-# volumes:
-#   rabbitmq_data:
+  receiver:
+    image: receiver:0.1.0-SNAPSHOT
+    container_name: receiver
