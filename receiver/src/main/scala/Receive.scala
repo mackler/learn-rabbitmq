@@ -8,6 +8,7 @@ import com.rabbitmq.client.{
   Envelope
 }
 import com.rabbitmq.client.AMQP.BasicProperties
+import upickle.default.*
 import scala.jdk.CollectionConverters.*
 import java.nio.charset.StandardCharsets
 
@@ -17,10 +18,14 @@ object Receiver:
       consumerTag: String, envelope: Envelope, amqpProperties: BasicProperties, body: Array[Byte]
     ): Unit =
       val bodyString = new String(body, StandardCharsets.UTF_8)
+      val message = read[Common.MyMessage](bodyString)
       println(s"consumer tag is is '$consumerTag'")
       println(s"envelope is '$envelope'")
       println(s"body is '$bodyString'")
       println(s"AMQP properties $amqpProperties")
+      println(s"name is ${message.name}")
+      println(s"priority is ${message.priority}")
+      println(s"instruction is ${message.what}")
 
   @main def recvMain(args: String*): Unit =
     val factory = new ConnectionFactory

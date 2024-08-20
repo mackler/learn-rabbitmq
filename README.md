@@ -6,9 +6,15 @@ Otherwise none of the rest will work.
 
 # Send a message
 
-    sbt "send/run hello"
+From the sbt prompt.
+
+    send/run """{"name": "joe", "priority": 3, "what": "start"}"""
 
 # Receive the message
+
+Note: the receiver must know the name of the host to connect to, which
+is different depending on whether or not it’s running in a container
+(either "localhost" or "rabbitmq").
 
     sbt receiver/run
 

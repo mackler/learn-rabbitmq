@@ -1,6 +1,7 @@
 lazy val commonSettings = Seq(
   libraryDependencies ++= Seq(
     "com.rabbitmq" % "amqp-client" % "5.21.0",
+    "com.lihaoyi" %% "upickle" % "4.0.0",
     "org.slf4j" % "slf4j-api" % "2.0.16",
     "org.slf4j" % "slf4j-simple" % "2.0.16"
   ),
